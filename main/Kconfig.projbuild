@@ -1,0 +1,54 @@
+menu "Door sensor configuration"
+
+config ANUSECURE_USERNAME
+	string "Username"
+	default "u1234567"
+	help
+	  EAP username for ANU-Secure.
+
+	  This only sets the Phase 2 identity - if you need a Phase 1 identity
+	  (maybe you're adapting this to eduroam or something) you'll need to
+	  add a call to esp_wifi_sta_wpa2_ent_set_identity.
+
+config ANUSECURE_PASSWORD
+	string "Password"
+	default ""
+	help
+	  EAP password for ANU-Secure.
+
+config ANUSECURE_VALIDATE_CERT
+	bool "Validate server certificate"
+	default y
+	help
+	  Validate the server's authenticity using the provided certificate.
+
+	  If you don't want your password stolen by someone's pineapple,
+	  say Y here.
+
+config API_SERVER
+	string "API server"
+	default "test.members.cssa.club"
+
+config API_PATH
+	string "API path"
+	default "/commonRoom/status"
+
+config API_KEY
+	string "API key"
+
+config API_PERIODIC
+	bool "Send periodic updates"
+	default y
+	help
+	  Update the server periodically if some time passes without a change.
+
+	  Technically, this will happen even if this option is disabled, as I
+	  believe portMAX_DELAY works out to about 47 days, but say yes here
+	  if you'd like more frequent updates.
+
+config API_PERIODIC_MINUTES
+	int "Periodic update freq. (in minutes)"
+	depends on API_PERIODIC
+	default 5
+
+endmenu
